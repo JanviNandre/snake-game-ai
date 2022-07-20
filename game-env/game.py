@@ -63,17 +63,17 @@ class SnakeGameAI:
 
     def play_step(self, action):
         self.frame_iteration += 1
-        # 1. collect user input
+        # collect user input
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
         
-        # 2. move
+        # move
         self._move(action) # update the head
         self.snake.insert(0, self.head)
         
-        # 3. check if game over
+        # check if game over
         reward = 0
         game_over = False
         if self.is_collision() or self.frame_iteration > 100*len(self.snake):
@@ -81,7 +81,7 @@ class SnakeGameAI:
             reward = -10
             return reward, game_over, self.score
 
-        # 4. place new food or just move
+        # place new food or just move
         if self.head == self.food:
             self.score += 1
             reward = 10
@@ -89,10 +89,10 @@ class SnakeGameAI:
         else:
             self.snake.pop()
         
-        # 5. update ui and clock
+        # update ui and clock
         self._update_ui()
         self.clock.tick(SPEED)
-        # 6. return game over and score
+        # return game over and score
         return reward, game_over, self.score
 
 
